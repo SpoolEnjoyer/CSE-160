@@ -22,8 +22,6 @@ function main() {
   // Fill The entire canvas as black
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, 400, 400);
-  var v1 = new Vector3([2.25, 2.25, 0.0]);
-  drawVector(v1, "red");
 
   var draw_button = document.getElementById("draw");
   draw_button.addEventListener('click', handleDrawEvent);
@@ -40,10 +38,14 @@ function main() {
     ctx.clearRect(0,0,400,400);
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 400, 400);
-    let x1 = document.getElementById("x").value;
-    let y1 = document.getElementById("y").value;
-    v1 = new Vector3([x1, y1, 0]);
+    let x1 = document.getElementById("x1").value;
+    let y1 = document.getElementById("y1").value;
+    let v1 = new Vector3([x1, y1, 0]);
+    let x2 = document.getElementById("x2").value;
+    let y2 = document.getElementById("y2").value;
+    let v2 = new Vector3([x2, y2, 0]);
     drawVector(v1, "red");
+    drawVector(v2, "blue");
   }
 
 }
