@@ -25,6 +25,9 @@ function main() {
   var v1 = new Vector3([2.25, 2.25, 0.0]);
   drawVector(v1, "red");
 
+  var draw_button = document.getElementById("draw");
+  draw_button.addEventListener('click', handleDrawEvent);
+
   function drawVector(v, color) {
     ctx.strokeStyle = color;
     ctx.beginPath();
@@ -33,6 +36,15 @@ function main() {
     ctx.stroke();
   }
 
+  function handleDrawEvent(){
+    ctx.clearRect(0,0,400,400);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 400, 400);
+    let x1 = document.getElementById("x").value;
+    let y1 = document.getElementById("y").value;
+    v1 = new Vector3([x1, y1, 0]);
+    drawVector(v1, "red");
+  }
 
 }
 
