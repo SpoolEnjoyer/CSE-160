@@ -32,7 +32,7 @@ function main() {
   var v1;
   var v2;
   var v3;
-  var v4
+  var v4;
 
   function drawVector(v, color) {
     ctx.strokeStyle = color;
@@ -74,15 +74,33 @@ function main() {
         v3.mul(scalar);
         v4 = v2;
         v4.mul(scalar);
-      drawVector(v3, "green");
-      drawVector(v4, "green");
+        drawVector(v3, "green");
+        drawVector(v4, "green");
         break;
       case "divide" :
         drawVector(v1.div(scalar), "green");
         drawVector(v2.div(scalar), "green");
         break;
+      case "angleBetween" :
+        console.log("Angle:", angleBetween(v1,v2));
+        break;
+      case "magnitude" :
+        console.log("Magnitude v1:", v1.magnitude());
+        console.log("Magnitude v2:", v2.magnitude());
+        break;
+      case "normalize" :
+        v3 = v1;
+        v3.normalize();
+        v4 = v2;
+        v4.normalize();
+        drawVector(v3, "green");
+        drawVector(v4, "green");
+        break;
     }
+  }
 
+  function angleBetween(v1, v2){
+    return Math.acos(Vector3.dot(v1,v2) / (v1.magnitude() * v2.magnitude())) * (180 / Math.PI);
   }
 
   function clearCanvas(){
