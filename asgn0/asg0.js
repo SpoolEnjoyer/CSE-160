@@ -23,8 +23,16 @@ function main() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, 400, 400);
 
-  var draw_button = document.getElementById("draw");
+  var draw_button = document.getElementById("drawVectors");
   draw_button.addEventListener('click', handleDrawEvent);
+
+  var draw_operation = document.getElementById("drawOperation");
+  draw_operation.addEventListener('click', handleDrawOperationEvent);
+  
+  var v1;
+  var v2;
+  var v3;
+  var v4
 
   function drawVector(v, color) {
     ctx.strokeStyle = color;
@@ -35,17 +43,52 @@ function main() {
   }
 
   function handleDrawEvent(){
-    ctx.clearRect(0,0,400,400);
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, 400, 400);
+    clearCanvas();
     let x1 = document.getElementById("x1").value;
     let y1 = document.getElementById("y1").value;
-    let v1 = new Vector3([x1, y1, 0]);
+    v1 = new Vector3([x1, y1, 0]);
     let x2 = document.getElementById("x2").value;
     let y2 = document.getElementById("y2").value;
-    let v2 = new Vector3([x2, y2, 0]);
+    v2 = new Vector3([x2, y2, 0]);
     drawVector(v1, "red");
     drawVector(v2, "blue");
+  }
+
+  function handleDrawOperationEvent(){
+    handleDrawEvent();
+    let operation = document.getElementById("operations").value;
+    let scalar = document.getElementById("scalar").value;
+    switch (operation){
+      case "add" : 
+      v3 = v1;
+      v3.add(v2);
+      drawVector(v3, "green");
+        break;
+      case "subtract" :
+        v3 = v1;
+        v3.sub(v2);
+        drawVector(v3, "green");
+        break;
+      case "multiply" :
+        v3 = v1;
+        v3.mul(scalar);
+        v4 = v2;
+        v4.mul(scalar);
+      drawVector(v3, "green");
+      drawVector(v4, "green");
+        break;
+      case "divide" :
+        drawVector(v1.div(scalar), "green");
+        drawVector(v2.div(scalar), "green");
+        break;
+    }
+
+  }
+
+  function clearCanvas(){
+    ctx.clearRect(0, 0, 400, 400);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, 400, 400);
   }
 
 }
