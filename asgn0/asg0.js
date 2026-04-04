@@ -1,5 +1,5 @@
-// DrawTriangle.js (c) 2012 matsuda
-
+// Robert Schmidling
+// rschmidl@ucsc.edu
 function main() {  
   // Retrieve <canvas> element
   var canvas = document.getElementById('example');  
