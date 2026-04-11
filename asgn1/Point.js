@@ -14,6 +14,9 @@ class Point{
     // var rgba = g_colors[i];
     // var size = g_sizes[i];
 
+    // quit using buffer to send the attribute
+    gl.disableVertexAttribArray(a_Position);
+
     // Pass the position of a point to a_Position variable
     gl.vertexAttrib3f(a_Position, xy[0], xy[1], 0.0);
     // Pass the color of a point to u_FragColor variable
