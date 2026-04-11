@@ -29,7 +29,8 @@ function setupWebGL(){
   canvas = document.getElementById('webgl');
 
   // Get the rendering context for WebGL
-  gl = getWebGLContext(canvas);
+  //gl = getWebGLContext(canvas);
+  gl = canvas.getContext("webgl", { preserveDrawingBuffer: true});
   if (!gl) {
     console.log('Failed to get the rendering context for WebGL');
     return;
@@ -74,7 +75,7 @@ function addActionsForHTMLUI(){
   //Button Events
   document.getElementById('green').onclick = function() {g_selectedColor = [0.0, 1.0, 0.0, 1.0];};
   document.getElementById('red').onclick = function() {g_selectedColor = [1.0, 0.0, 0.0, 1.0];};
-
+  document.getElementById('clearButton').addEventListener('mouseup', function() {g_shapeList=[]; renderAllShapes();});
   // Slider Events
   document.getElementById('redSlide').addEventListener('mouseup', function() {g_selectedColor[0] = this.value/100;});
   document.getElementById('greenSlide').addEventListener('mouseup', function() {g_selectedColor[1] = this.value/100;});
@@ -82,6 +83,8 @@ function addActionsForHTMLUI(){
 
   // Size Slider Events
   document.getElementById('sizeSlide').addEventListener('mouseup', function() {g_selectedSize = this.value;});
+
+  
 }
 
 function main() {
@@ -94,6 +97,8 @@ function main() {
 
   // Register function (event handler) to be called on a mouse press
   canvas.onmousedown = click;
+  // canvas.onmousemove = click;
+  canvas.onmousemove = function(ev) {if(ev.buttons == 1) {click(ev);}};
 
   // Specify the color for clearing <canvas>
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -152,6 +157,9 @@ function convertCoordinatesEventToGL(ev){
 }
 
 function renderAllShapes(){
+  // Check the time at the start of this funciton
+  var startTime = performance.now();
+
   // Clear <canvas>
   gl.clear(gl.COLOR_BUFFER_BIT);
 
@@ -160,6 +168,17 @@ function renderAllShapes(){
   for(var i = 0; i < len; i++) {
     g_shapeList[i].render();
 
-    
   }
+  var duration = performance.now() - startTime;
+  sendTextToHTML("numdot: " + len + "ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration), "numdot" );
+  
+}
+
+function sendTextToHTML(text, htmlID){
+  var htmlElm = document.getElementById(htmlID);
+  if(!htmlElm){
+    console.log("Failed to get " + htmlID + " from HTML");
+    return;
+  }
+  htmlElm.innerHTML = text;
 }
