@@ -24,6 +24,7 @@ class Triangle {
     var d = this.size/200.0; // Delta
     drawTriangle([xy[0], xy[1], xy[0]+d, xy[1] , xy[0], xy[1]+d]);
   }
+
 }
 
 function drawTriangle(vertices) {
