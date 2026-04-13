@@ -80,7 +80,10 @@ function addActionsForHTMLUI(){
   //Button Events
   document.getElementById('green').onclick = function() {g_selectedColor = [0.0, 1.0, 0.0, 1.0];};
   document.getElementById('red').onclick = function() {g_selectedColor = [1.0, 0.0, 0.0, 1.0];};
-  document.getElementById('clearButton').addEventListener('mouseup', function() {g_shapeList=[]; renderAllShapes();});
+  document.getElementById('clearButton').addEventListener('mouseup', function() {
+    myDrawingStatus = false;
+    g_shapeList=[]; renderAllShapes();
+  });
   document.getElementById('pointButton').onclick = function() {g_selectedType=POINT};
   document.getElementById('triButton').onclick = function() {g_selectedType=TRIANGLE};
   document.getElementById('circleButton').onclick = function() {g_selectedType=CIRCLE};
@@ -172,6 +175,10 @@ function renderAllShapes(){
     g_shapeList[i].render();
 
   }
+  if (myDrawingStatus){
+    myDrawing();
+  }
+
   var duration = performance.now() - startTime;
   sendTextToHTML("numdot: " + len + "ms: " + Math.floor(duration) + " fps: " + Math.floor(10000/duration), "numdot" );
   

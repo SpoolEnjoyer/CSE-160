@@ -1,17 +1,14 @@
 
 // variables to consider for input
 // let g_selectedColor = [1.0, 1.0, 1.0, 1.0, 1.0];
-// let g_selectedSize = 5;
-// let g_selectedType=POINT;
-// let g_SelectedSegment=10;
 // color [r, g, b, a]
-
+var myDrawingStatus = false;
 
 function myDrawing() {
     // functions
     // vertices and color
     // unit conversion 20x20 -> 400 x 400
-
+    myDrawingStatus = true;
 
     // first row
     drawTriangleCustom(convertUnitToCanvas([4.0, 6.0, 7.0, 5.0, 9.0, 6.0]), [1.0, 1.0, 1.0, 1.0] );
