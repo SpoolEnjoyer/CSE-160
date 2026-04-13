@@ -1,6 +1,15 @@
 <!-- 
  Robert Schmidling
  rschmidl@ucsc.edu
+ notes:
+ Made a drawing of a Space JellyFish with my initials as tentacles
+ Click My Drawing to Render my drawing
+ If you click on the canvas (400x400 screen) to draw something while the drawing is open,
+    the drawing disappears, can rerender drawing by just clicking My Drawing button
+ Made a pong game using AI
+ To start the Pong Game click on Start game
+ Click end game to return to Drawing Program
+ // Pong.js is AI generated code
 -->
 
 <!DOCTYPE html>
@@ -15,8 +24,12 @@
     Please use a browser that supports "canvas"
     </canvas>
     <br>
-
+    
     <p id="numdot"> XXX </p>
+    <button type="button" id="gameStart">Start Game</button>
+    <button id="endGameButton">End Game</button>
+    <br>
+    <br>
     <button type="button" id="green">Green</button>
     <button type="button" id="red">Red</button>
     <button type="button" id="clearButton">Clear</button>
@@ -43,7 +56,8 @@
     <br>
     <br>
     <button type="button" id="myDrawingButton">My Drawing</button>
-    
+    <br>
+    <img src="reference.jpeg" width="400">
 
     <script src="lib/webgl-utils.js"></script>
     <script src="lib/webgl-debug.js"></script>
@@ -53,5 +67,6 @@
     <script src="Triangle.js"></script>
     <script src="Circle.js"></script>
     <script src="MyDrawing.js"></script>
+    <script src="Pong.js"></script>
   </body>
 </html>

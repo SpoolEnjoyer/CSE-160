@@ -85,6 +85,8 @@ function addActionsForHTMLUI(){
   document.getElementById('triButton').onclick = function() {g_selectedType=TRIANGLE};
   document.getElementById('circleButton').onclick = function() {g_selectedType=CIRCLE};
   document.getElementById('myDrawingButton').onclick = function() {myDrawing()};
+  document.getElementById('gameStart').onclick = function() {startPong()};
+  document.getElementById('endGameButton').onclick = function() {endGame();};
   // Slider Events
   document.getElementById('redSlide').addEventListener('mouseup', function() {g_selectedColor[0] = this.value/100;});
   document.getElementById('greenSlide').addEventListener('mouseup', function() {g_selectedColor[1] = this.value/100;});
