@@ -1,0 +1,85 @@
+<!-- 
+ Robert Schmidling
+ rschmidl@ucsc.edu
+ notes:
+ Made a drawing of a Fantasy Space JellyFish with my initials as tentacles
+ Click button My Drawing to Render my drawing
+ Made a pong game using AI
+ To start the Pong Game click on Start game
+ Click end game to return to Drawing Program
+ // Pong.js is AI generated code
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change a point color</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+    <br>
+    <p id="numdot"> XXX </p>
+    <button id="animOn">Animation ON</button>
+<button id="animOff">Animation OFF</button>
+    <p>
+Head / Neck
+<input type="range" min="-90" max="90" step="1" value="0" id="headSlide">
+</p>
+
+<p>
+Left Wing
+<input type="range" min="-90" max="90" step="1" value="0" id="leftShoulder">
+</p>
+
+<p>
+Left Wing Bend
+<input type="range" min="-90" max="90" step="1" value="0" id="leftElbow">
+</p>
+
+<p>
+Right Wing
+<input type="range" min="-90" max="90" step="1" value="0" id="rightShoulder">
+</p>
+
+<p>
+Right Wing Bend
+<input type="range" min="-90" max="90" step="1" value="0" id="rightElbow">
+</p>
+
+<p>
+Tail Fan
+<input type="range" min="-40" max="40" step="1" value="0" id="tailSlide">
+</p>
+<p>Left Leg <input type="range" min="-45" max="45" value="0" id="leftLeg"></p>
+<p>Right Leg <input type="range" min="-45" max="45" value="0" id="rightLeg"></p>
+<p>Left Knee <input type="range" min="-90" max="0" value="0" id="leftKnee"></p>
+<p>Right Knee <input type="range" min="-90" max="0" value="0" id="rightKnee"></p>
+<p>
+Left Foot
+<input type="range" id="leftFoot" min="-45" max="45" value="0">
+</p>
+<p>
+Right Foot
+<input type="range" id="rightFoot" min="-45" max="45" value="0">
+</p>
+<p>
+Camera Angle
+<input type="range" min="0" max="360" step="1" value="0" id="cameraAngleSlide">
+</p>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="Point.js"></script>
+    <script src="BlockyAnimal.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Cone.js"></script>
+  </body>
+</html>
