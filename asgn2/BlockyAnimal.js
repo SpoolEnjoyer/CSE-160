@@ -476,7 +476,7 @@ function renderScene() {
   neckJoint.rotate(40,1,0,0);
 
   // head turning
-  neckJoint.rotate(g_headAngle,0,1,0);
+  neckJoint.rotate(g_headAngle,1,0,0);
 
   const neck1 = new Cube();
   neck1.color=[0,0.6,1,1];
