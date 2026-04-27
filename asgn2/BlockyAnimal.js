@@ -6,14 +6,23 @@ var VSHADER_SOURCE = `
 
   uniform mat4 u_ModelMatrix;
   uniform mat4 u_GlobalRotateMatrix;
+  uniform mat4 u_NormalMatrix;
 
   varying vec3 v_Normal;
 
   void main() {
+
     gl_Position = u_GlobalRotateMatrix * u_ModelMatrix * a_Position;
 
-    // transform normal for lighting
-    v_Normal = normalize(mat3(u_ModelMatrix) * a_Normal);
+    vec3 n = mat3(u_NormalMatrix) * a_Normal;
+
+    float len = length(n);
+
+    if(len < 0.0001){
+      n = vec3(0.0, 1.0, 0.0);
+    }
+
+    v_Normal = normalize(n);
   }`
 
 // Fragment shader program
@@ -48,6 +57,7 @@ let a_Normal;
 let g_targetFPS = 240;
 let g_frameInterval = 1000 / g_targetFPS;
 let g_lastFrameTime = 0;
+let u_NormalMatrix;
 
 function setupWebGL(){
   // Retrieve <canvas> element
@@ -62,6 +72,7 @@ function setupWebGL(){
   }
 
   gl.enable(gl.DEPTH_TEST);
+  
 }
 
 function connectVariablesToGLSL(){
@@ -100,6 +111,12 @@ function connectVariablesToGLSL(){
   a_Normal = gl.getAttribLocation(gl.program, 'a_Normal');
   if (a_Normal < 0) {
     console.log('Failed to get a_Normal');
+    return;
+  }
+
+  u_NormalMatrix = gl.getUniformLocation(gl.program, 'u_NormalMatrix');
+  if(!u_NormalMatrix){
+    console.log('Failed to get u_NormalMatrix');
     return;
   }
   
@@ -200,6 +217,13 @@ function addActionsForHTMLUI(){
     g_rightFoot = this.value;
     renderScene();
   });
+
+    // RESET BUTTON
+  document.getElementById("resetButton").addEventListener("click", function(){
+    resetPose();
+  });
+
+
 }
   
 
@@ -230,8 +254,6 @@ function syncSliders() {
   document.getElementById("headSlide").value = g_headAngle;
   document.getElementById("leftShoulder").value = g_leftShoulder;
   document.getElementById("rightShoulder").value = g_rightShoulder;
-  document.getElementById("leftElbow").value = g_leftElbow;
-  document.getElementById("rightElbow").value = g_rightElbow;
 
   document.getElementById("tailSlide").value = g_tailAngle;
 
@@ -359,6 +381,8 @@ function updateAnimationAngles(){
 
     g_leftFoot = -15*Math.sin(g_seconds*2);
     g_rightFoot = 15*Math.sin(g_seconds*2);
+
+    g_headAngle = 10 * Math.sin(t * 4);
   }
 
   // poke overrides (ADDITIVE, not replacement)
@@ -377,9 +401,48 @@ function updateAnimationAngles(){
 
     g_leftLeg += 10 * recoil;
     g_rightLeg += 10 * recoil;
-  }
-}
+  } 
 
+  if(g_poke && pokeT >= g_pokeDuration){
+  g_poke = false;
+}
+}
+function resetPose(){
+
+  // head
+  g_headAngle = 0;
+  g_headOffsetY = 0;
+
+  // shoulders / arms
+  g_leftShoulder = 0;
+  g_rightShoulder = 0;
+  g_leftArmOffsetX = 0;
+  g_rightArmOffsetX = 0;
+
+  // legs
+  g_leftLeg = 0;
+  g_rightLeg = 0;
+  g_leftKnee = 0;
+  g_rightKnee = 0;
+
+  g_leftLegOffsetX = 0;
+  g_rightLegOffsetX = 0;
+  g_legOffsetY = 0;
+
+  // feet
+  g_leftFoot = 0;
+  g_rightFoot = 0;
+
+  // tail
+  g_tailAngle = 0;
+
+  // animation states
+  g_animation = false;
+  g_poke = false;
+  g_explode = 0;
+  g_pokeStart = 0;
+  renderAllShapes(); // redraw scene
+}
 
 function renderScene() {
 
@@ -477,12 +540,18 @@ beak.render();
     joint.translate(xOffset,0.13,-0.05);
 
     // correct flap axis
-    joint.rotate(angle,1,0,0);
+    joint.rotate(angle,0,0,1);
 
     const wing=new Cube();
     wing.color=[0.2,0.6,0.2,1];
     wing.matrix=new Matrix4(joint);
-    wing.matrix.translate(-0.22,-0.06,-0.07);
+    if(xOffset === 0){
+    // LEFT wing
+    wing.matrix.translate(-0.42,-0.045,-0.14);
+  } else {
+    // RIGHT wing
+    wing.matrix.translate(0,-0.045,-0.14);
+  }
     wing.matrix.scale(0.42,0.09,0.28);
     wing.render();
   }

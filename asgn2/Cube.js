@@ -100,6 +100,13 @@ class Cube {
             color[3]
         );
 
+        // compute normal matrix
+        let normalMatrix = new Matrix4();
+        normalMatrix.setInverseOf(M);
+        normalMatrix.transpose();
+
+        gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
+        
         // ---- matrix ----
         gl.uniformMatrix4fv(u_ModelMatrix, false, M.elements);
 
@@ -113,6 +120,7 @@ class Cube {
         gl.vertexAttribPointer(a_Normal, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(a_Normal);
 
+        
         // ---- draw ----
         gl.drawArrays(gl.TRIANGLES, 0, 36);
     }

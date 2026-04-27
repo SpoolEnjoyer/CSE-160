@@ -86,6 +86,13 @@ class Cone {
 
     gl.uniformMatrix4fv(u_ModelMatrix,false,M.elements);
 
+    // NORMAL MATRIX
+    let normalMatrix = new Matrix4();
+    normalMatrix.setInverseOf(M);
+    normalMatrix.transpose();
+
+    gl.uniformMatrix4fv(u_NormalMatrix, false, normalMatrix.elements);
+
     // POSITION
     gl.bindBuffer(gl.ARRAY_BUFFER,g_coneBuffer);
     gl.vertexAttribPointer(a_Position,3,gl.FLOAT,false,0,0);
@@ -121,6 +128,10 @@ function computeNormal(p1,p2,p3){
   ];
 
   const len = Math.sqrt(N[0]*N[0] + N[1]*N[1] + N[2]*N[2]);
+
+  if(len < 0.00001){
+    return [0,1,0];
+  }
 
   return [N[0]/len,N[1]/len,N[2]/len];
 }
