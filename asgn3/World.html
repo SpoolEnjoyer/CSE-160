@@ -1,0 +1,83 @@
+<!--
+  Robert Schmidling | rschmidl@ucsc.edu
+  Assignment 3 - 3D Voxel World with First-Person Camera
+  Animal: Peacock (carried over from Asgn2, placed in world as animated entity)
+  Game: Collect 5 Magic Gems to make the Peacock dance
+  Controls: WASD=move, QE=turn, Mouse=look, F=place block, R=remove block, 1/2/3=block texture
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Peacock World – CSE160 Asgn3</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#000; overflow:hidden; }
+    canvas { display:block; }
+
+    #hud {
+      position:absolute; top:10px; left:10px;
+      color:#fff; font:14px monospace;
+      pointer-events:none;
+      text-shadow:1px 1px 3px #000;
+      line-height:1.6;
+    }
+
+    #crosshair {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      color:#fff; font-size:22px; font-weight:bold;
+      pointer-events:none;
+      text-shadow:0 0 4px #000;
+    }
+
+    #story {
+      position:absolute; bottom:24px; left:50%;
+      transform:translateX(-50%);
+      color:#ffe; font:bold 16px monospace;
+      text-shadow:0 0 6px #000;
+      pointer-events:none;
+      text-align:center;
+    }
+
+    #lockMsg {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      color:#fff; font:20px monospace;
+      text-shadow:0 0 8px #000;
+      pointer-events:none;
+      text-align:center;
+      background:rgba(0,0,0,0.5);
+      padding:16px 24px;
+      border-radius:8px;
+    }
+  </style>
+</head>
+<body onload="main()">
+  <canvas id="webgl" width="900" height="600"></canvas>
+
+  <div id="hud">
+    <div id="fps">FPS: --</div>
+    <div id="pos">XZ: --</div>
+    <div id="gems">Gems: 0 / 5</div>
+    <div style="margin-top:6px;font-size:11px;color:#ccc">
+      WASD: Move &nbsp; QE: Turn &nbsp; Mouse: Look<br>
+      F: Place block &nbsp; R: Remove block<br>
+      1/2/3: Switch block type
+    </div>
+  </div>
+
+  <div id="crosshair">+</div>
+  <div id="story"></div>
+  <div id="lockMsg">Click to capture mouse &amp; start exploring</div>
+
+  <script src="lib/webgl-utils.js"></script>
+  <script src="lib/webgl-debug.js"></script>
+  <script src="lib/cuon-utils.js"></script>
+  <script src="lib/cuon-matrix.js"></script>
+  <script src="Camera.js"></script>
+  <script src="Cube.js"></script>
+  <script src="Cone.js"></script>
+  <script src="World.js"></script>
+</body>
+</html>

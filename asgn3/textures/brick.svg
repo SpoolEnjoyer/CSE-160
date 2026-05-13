@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Base brick color -->
+  <rect width="128" height="128" fill="#c0674a"/>
+
+  <!-- Horizontal mortar lines every 16px -->
+  <rect x="0" y="0"   width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="16"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="32"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="48"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="64"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="80"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="96"  width="128" height="2" fill="#5a2a15"/>
+  <rect x="0" y="112" width="128" height="2" fill="#5a2a15"/>
+
+  <!-- Vertical mortar: even rows at x=0,64 -->
+  <rect x="0"  y="2"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="64" y="2"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="0"  y="34" width="2" height="14" fill="#5a2a15"/>
+  <rect x="64" y="34" width="2" height="14" fill="#5a2a15"/>
+  <rect x="0"  y="66" width="2" height="14" fill="#5a2a15"/>
+  <rect x="64" y="66" width="2" height="14" fill="#5a2a15"/>
+  <rect x="0"  y="98" width="2" height="14" fill="#5a2a15"/>
+  <rect x="64" y="98" width="2" height="14" fill="#5a2a15"/>
+
+  <!-- Vertical mortar: odd rows at x=32,96 -->
+  <rect x="32" y="18"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="96" y="18"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="32" y="50"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="96" y="50"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="32" y="82"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="96" y="82"  width="2" height="14" fill="#5a2a15"/>
+  <rect x="32" y="114" width="2" height="14" fill="#5a2a15"/>
+  <rect x="96" y="114" width="2" height="14" fill="#5a2a15"/>
+
+  <!-- Subtle face shading on each brick (lighter highlight top-left) -->
+  <rect x="2"  y="2"  width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="66" y="2"  width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="34" y="18" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="98" y="18" width="29" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="2"  y="34" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="66" y="34" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="34" y="50" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="98" y="50" width="29" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="2"  y="66" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="66" y="66" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="34" y="82" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="98" y="82" width="29" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="2"  y="98" width="61" height="6" fill="#d07858" opacity="0.35"/>
+  <rect x="66" y="98" width="61" height="6" fill="#d07858" opacity="0.35"/>
+</svg>

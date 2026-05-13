@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Base wood color -->
+  <rect width="128" height="128" fill="#8B5E3C"/>
+
+  <!-- Plank dividers (horizontal gaps every 32px) -->
+  <rect x="0" y="31"  width="128" height="2" fill="#4a2e10"/>
+  <rect x="0" y="63"  width="128" height="2" fill="#4a2e10"/>
+  <rect x="0" y="95"  width="128" height="2" fill="#4a2e10"/>
+
+  <!-- Wood grain lines (plank 1: y=0-30) -->
+  <line x1="0" y1="6"  x2="128" y2="8"  stroke="#a87040" stroke-width="1.5" opacity="0.5"/>
+  <line x1="0" y1="14" x2="128" y2="12" stroke="#6b3e1a" stroke-width="1"   opacity="0.4"/>
+  <line x1="0" y1="22" x2="128" y2="24" stroke="#a87040" stroke-width="1.5" opacity="0.45"/>
+
+  <!-- Wood grain lines (plank 2: y=33-62) -->
+  <line x1="0" y1="38" x2="128" y2="40" stroke="#6b3e1a" stroke-width="1"   opacity="0.4"/>
+  <line x1="0" y1="46" x2="128" y2="44" stroke="#a87040" stroke-width="1.5" opacity="0.5"/>
+  <line x1="0" y1="55" x2="128" y2="57" stroke="#a87040" stroke-width="1.5" opacity="0.45"/>
+
+  <!-- Wood grain lines (plank 3: y=65-94) -->
+  <line x1="0" y1="70" x2="128" y2="72" stroke="#a87040" stroke-width="1.5" opacity="0.5"/>
+  <line x1="0" y1="79" x2="128" y2="77" stroke="#6b3e1a" stroke-width="1"   opacity="0.4"/>
+  <line x1="0" y1="87" x2="128" y2="89" stroke="#a87040" stroke-width="1.5" opacity="0.45"/>
+
+  <!-- Wood grain lines (plank 4: y=97-127) -->
+  <line x1="0" y1="102" x2="128" y2="100" stroke="#6b3e1a" stroke-width="1"   opacity="0.4"/>
+  <line x1="0" y1="110" x2="128" y2="112" stroke="#a87040" stroke-width="1.5" opacity="0.5"/>
+  <line x1="0" y1="120" x2="128" y2="118" stroke="#a87040" stroke-width="1.5" opacity="0.45"/>
+
+  <!-- Knot on plank 1 -->
+  <ellipse cx="90" cy="16" rx="6" ry="5" fill="none" stroke="#5a3010" stroke-width="1.5" opacity="0.6"/>
+  <ellipse cx="90" cy="16" rx="3" ry="2" fill="#5a3010" opacity="0.4"/>
+</svg>

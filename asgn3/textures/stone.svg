@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Base stone gray -->
+  <rect width="128" height="128" fill="#6e6e6e"/>
+
+  <!-- Stone blocks: row 0 -->
+  <rect x="1"  y="1"  width="58" height="30" fill="#8a8a8a" stroke="#444" stroke-width="1"/>
+  <rect x="61" y="1"  width="66" height="30" fill="#828282" stroke="#444" stroke-width="1"/>
+
+  <!-- Stone blocks: row 1 (offset) -->
+  <rect x="1"  y="33" width="28" height="30" fill="#909090" stroke="#444" stroke-width="1"/>
+  <rect x="31" y="33" width="46" height="30" fill="#7c7c7c" stroke="#444" stroke-width="1"/>
+  <rect x="79" y="33" width="48" height="30" fill="#888888" stroke="#444" stroke-width="1"/>
+
+  <!-- Stone blocks: row 2 -->
+  <rect x="1"  y="65" width="40" height="30" fill="#848484" stroke="#444" stroke-width="1"/>
+  <rect x="43" y="65" width="50" height="30" fill="#8e8e8e" stroke="#444" stroke-width="1"/>
+  <rect x="95" y="65" width="32" height="30" fill="#808080" stroke="#444" stroke-width="1"/>
+
+  <!-- Stone blocks: row 3 (offset) -->
+  <rect x="1"  y="97" width="62" height="30" fill="#868686" stroke="#444" stroke-width="1"/>
+  <rect x="65" y="97" width="62" height="30" fill="#8c8c8c" stroke="#444" stroke-width="1"/>
+
+  <!-- Small cracks for realism -->
+  <line x1="20"  y1="10" x2="30"  y2="18" stroke="#555" stroke-width="1" opacity="0.5"/>
+  <line x1="80"  y1="5"  x2="88"  y2="14" stroke="#555" stroke-width="1" opacity="0.4"/>
+  <line x1="10"  y1="50" x2="18"  y2="58" stroke="#555" stroke-width="1" opacity="0.5"/>
+  <line x1="100" y1="45" x2="110" y2="52" stroke="#555" stroke-width="1" opacity="0.4"/>
+  <line x1="50"  y1="78" x2="60"  y2="85" stroke="#555" stroke-width="1" opacity="0.5"/>
+  <line x1="15"  y1="108" x2="22" y2="116" stroke="#555" stroke-width="1" opacity="0.4"/>
+</svg>
