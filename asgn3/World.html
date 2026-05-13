@@ -12,8 +12,8 @@
   <title>Peacock World – CSE160 Asgn3</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#000; overflow:hidden; }
-    canvas { display:block; }
+    html, body { width:100%; height:100%; background:#000; overflow:hidden; }
+    canvas { display:block; width:100%; height:100%; }
 
     #hud {
       position:absolute; top:10px; left:10px;
@@ -54,7 +54,7 @@
   </style>
 </head>
 <body onload="main()">
-  <canvas id="webgl" width="900" height="600"></canvas>
+  <canvas id="webgl"></canvas>
 
   <div id="hud">
     <div id="fps">FPS: --</div>

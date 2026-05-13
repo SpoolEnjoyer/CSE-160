@@ -192,13 +192,17 @@ const g_map = [
 ];
 /* eslint-enable */
 
-// border hills = grass (tex 3), grass bumps = grass (tex 3), rocks = stone (tex 1)
-const g_mapType = Array.from({length:32}, (_,z) =>
+// True 3D voxel grid — each cell is independent, enabling floating blocks.
+// g_voxels[z][x][y] = texture index (0-3), or -1 = empty.
+// g_map is kept as static init data (never modified at runtime).
+const MAX_Y = 6;
+const g_voxels = Array.from({length:32}, (_,z) =>
   Array.from({length:32}, (_,x) => {
-    if (x===0||x===31||z===0||z===31) return 3; // border → grass hill
-    const h = g_map[z][x];
-    if (h <= 1) return 3;  // low bump → grass
-    return 1;              // rock cluster → stone
+    const baseTex = (x===0||x===31||z===0||z===31) ? 3
+                  : g_map[z][x] <= 1 ? 3 : 1;
+    const col = new Array(MAX_Y).fill(-1);
+    for (let y = 0; y < g_map[z][x] && y < MAX_Y; y++) col[y] = baseTex;
+    return col;
   })
 );
 
@@ -239,6 +243,15 @@ function main() {
   canvas = document.getElementById('webgl');
   gl     = canvas.getContext('webgl', { preserveDrawingBuffer:false });
   if (!gl) { alert('WebGL not supported'); return; }
+
+  function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (camera) camera._buildProj();
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
 
   gl.enable(gl.DEPTH_TEST);
 
@@ -301,7 +314,7 @@ function tick(now) {
 function setupInput() {
   document.addEventListener('keydown', e => {
     g_keys[e.key.toLowerCase()] = true;
-    handleKeyPress(e.key.toLowerCase());
+    if (!e.repeat) handleKeyPress(e.key.toLowerCase());  // fire once per press
   });
   document.addEventListener('keyup',   e => { g_keys[e.key.toLowerCase()] = false; });
 
@@ -372,49 +385,40 @@ function _forwardXZ() {
   return [fx, fz];
 }
 
-// Steps forward until the first non-empty cell is found (for remove / add-on-top).
-// Returns [x, z] or null if nothing within reach.
-function _firstFilledBlock() {
-  const [ex,,ez] = camera.eye;
-  const [fx, fz]  = _forwardXZ();
-  for (let d = 0.5; d <= 3.5; d += 0.1) {
-    const bx = Math.floor(ex + fx * d);
-    const bz = Math.floor(ez + fz * d);
-    if (bx < 0 || bx > 31 || bz < 0 || bz > 31) continue;
-    if (g_map[bz][bx] > 0) return [bx, bz];
-  }
-  return null;
+function _rayDir() {
+  const [ex,ey,ez] = camera.eye, [ax,ay,az] = camera.at;
+  const len = Math.hypot(ax-ex, ay-ey, az-ez);
+  return [(ax-ex)/len, (ay-ey)/len, (az-ez)/len];
 }
 
-// Steps forward until the first empty cell is found (for placing new blocks).
-function _firstEmptyBlock() {
-  const [ex,,ez] = camera.eye;
-  const [fx, fz]  = _forwardXZ();
-  for (let d = 0.5; d <= 3.5; d += 0.1) {
-    const bx = Math.floor(ex + fx * d);
-    const bz = Math.floor(ez + fz * d);
-    if (bx < 0 || bx > 31 || bz < 0 || bz > 31) continue;
-    if (g_map[bz][bx] === 0) return [bx, bz];
+// Walks the 3D ray and returns the first filled voxel {bx,by,bz} within reach,
+// plus the last empty voxel {px,py,pz} before it (placement target).
+function _raycast() {
+  const [ex,ey,ez] = camera.eye;
+  const [dx,dy,dz] = _rayDir();
+  let prevBx=-1, prevBy=-1, prevBz=-1;
+
+  for (let d = 0.05; d <= 5.0; d += 0.05) {
+    const bx=Math.floor(ex+dx*d), by=Math.floor(ey+dy*d), bz=Math.floor(ez+dz*d);
+    if (bx<0||bx>31||bz<0||bz>31||by<0||by>=MAX_Y) continue; // keep last valid prev
+    if (g_voxels[bz][bx][by] >= 0)
+      return { hit:[bx,by,bz], prev:[prevBx,prevBy,prevBz] };
+    if (bx!==prevBx||by!==prevBy||bz!==prevBz) { prevBx=bx;prevBy=by;prevBz=bz; }
   }
-  return null;
+  return { hit:null, prev:[prevBx,prevBy,prevBz] };
 }
 
 function addBlock() {
-  // Place on top of first filled block, OR in first empty cell if nothing is there.
-  const target = _firstFilledBlock() || _firstEmptyBlock();
-  if (!target) return;
-  const [bx, bz] = target;
-  if (g_map[bz][bx] < 4) {
-    g_map[bz][bx]++;
-    g_mapType[bz][bx] = g_placeType;
-  }
+  const { prev:[px,py,pz] } = _raycast();
+  if (px<0||px>31||pz<0||pz>31||py<0||py>=MAX_Y) return;
+  if (g_voxels[pz][px][py] < 0) g_voxels[pz][px][py] = g_placeType;
 }
 
 function removeBlock() {
-  const target = _firstFilledBlock();
-  if (!target) return;
-  const [bx, bz] = target;
-  if (g_map[bz][bx] > 0) g_map[bz][bx]--;
+  const { hit } = _raycast();
+  if (!hit) return;
+  const [bx,by,bz] = hit;
+  g_voxels[bz][bx][by] = -1;
 }
 
 // ===========================================
@@ -583,17 +587,16 @@ function drawSky() {
 // Step 10 – Walls
 // ===========================================
 function drawWalls() {
-  const M   = new Matrix4();   // reuse one matrix to reduce GC pressure
+  const M   = new Matrix4();
   const clr = [1,1,1,1];
   for (let z = 0; z < 32; z++) {
     for (let x = 0; x < 32; x++) {
-      const h = g_map[z][x];
-      if (h === 0) continue;
-      const tex = g_mapType[z][x];
-      for (let y = 0; y < h; y++) {
+      const col = g_voxels[z][x];
+      for (let y = 0; y < MAX_Y; y++) {
+        if (col[y] < 0) continue;
         M.setIdentity();
         M.translate(x, y, z);
-        Cube.draw(M, clr, tex);
+        Cube.draw(M, clr, col[y]);
       }
     }
   }
